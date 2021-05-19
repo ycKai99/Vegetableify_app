@@ -42,7 +42,7 @@ class _NewProductState extends State<NewProduct> {
                   child: Text('Back'),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyApp()));
+                        MaterialPageRoute(builder: (context) => ProductList()));
                   },
                 ),
               ),
@@ -117,10 +117,10 @@ class _NewProductState extends State<NewProduct> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15)),
                           minWidth: 150,
-                          color: Colors.greenAccent,
+                          color: Colors.blueAccent,
                           child: Text('Add',
                               style:
-                                  TextStyle(color: Colors.black, fontSize: 15)),
+                                  TextStyle(color: Colors.white, fontSize: 15)),
                           onPressed: _confirmDialog,
                         ),
                       ),
@@ -136,11 +136,16 @@ class _NewProductState extends State<NewProduct> {
   }
 
   void _confirmDialog() {
-    if (_image == null ||
-        _nameController.text.toString() == "" ||
-        _priceController.text.toString() == "" ||
-        _typeController.text.toString() == "" ||
-        _qtyController.text.toString() == "") {
+    String name = _nameController.text.toString();
+    String type = _typeController.text.toString();
+    String price = _priceController.text.toString();
+    String qty = _qtyController.text.toString();
+    String base64Image = base64Encode(_image.readAsBytesSync());
+    if (base64Image == null ||
+        name == "" ||
+        price == "" ||
+        type == "" ||
+        qty == "") {
       Fluttertoast.showToast(
           msg: "Please fill in the product's information",
           toastLength: Toast.LENGTH_SHORT,
@@ -170,7 +175,7 @@ class _NewProductState extends State<NewProduct> {
                           fontWeight: FontWeight.bold)),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    _addProduct();
+                    _addProduct(name, type, price, qty, base64Image);
                   }),
               TextButton(
                   child: Text("Cancel",
@@ -214,19 +219,16 @@ class _NewProductState extends State<NewProduct> {
     _cropImage();
   }
 
-  Future<void> _addProduct() async {
-    String base64Image = base64Encode(_image.readAsBytesSync());
-    String name = _nameController.text.toString();
-    String type = _typeController.text.toString();
-    String price = _priceController.text.toString();
-    String qty = _qtyController.text.toString();
+  Future<void> _addProduct(String name, String type, String price, String qty,
+      String base64Image) async {
     http.post(Uri.parse("http://yck99.com/myshop/php/newproduct.php"), body: {
-      "encoded_string": base64Image,
       "name": name,
       "type": type,
       "price": price,
       "qty": qty,
+      "encoded_string": base64Image,
     }).then((response) {
+      print(name + " " + type + " " + price + " " + qty);
       print(response.body);
 
       if (response.body == "success") {
@@ -245,9 +247,9 @@ class _NewProductState extends State<NewProduct> {
           _priceController.text = "";
           _qtyController.text = "";
         });
-        Navigator.of(context).pop();
+
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MyApp()));
+            context, MaterialPageRoute(builder: (context) => ProductList()));
       } else {
         Fluttertoast.showToast(
             msg: "Failed",
