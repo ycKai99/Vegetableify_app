@@ -193,8 +193,8 @@ class _NewProductState extends State<NewProduct> {
   Future _pickImageFromCamera() async {
     final pickedFile = await _picker.getImage(
       source: ImageSource.camera,
-      maxHeight: 800,
-      maxWidth: 800,
+      maxHeight: 400,
+      maxWidth: 400,
     );
 
     if (pickedFile != null) {
@@ -228,7 +228,6 @@ class _NewProductState extends State<NewProduct> {
       "qty": qty,
       "encoded_string": base64Image,
     }).then((response) {
-      print(name + " " + type + " " + price + " " + qty);
       print(response.body);
 
       if (response.body == "success") {

@@ -82,81 +82,85 @@ class _ProductListState extends State<ProductList> {
                                       offset: Offset(1, 1),
                                     ),
                                   ]),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                      borderRadius: BorderRadius.only(),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            "http://yck99.com/myshop/images/${_productList[index]['prid']}.png",
-                                        height: 185,
-                                        width: 185,
-                                      )),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.only(),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              "http://yck99.com/myshop/images/${_productList[index]['prid']}.png",
+                                          height: 300,
+                                          width: 300,
+                                        )),
+                                    SizedBox(height: 0),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5, 10, 0, 0),
+                                            child: Text(
+                                                _productList[index]['prname'],
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationThickness: 2,
+                                                )),
+                                          ),
+                                        ]),
+                                    Row(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              5, 10, 0, 0),
+                                              5, 15, 5, 0),
                                           child: Text(
-                                              _productList[index]['prname'],
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2,
-                                              )),
+                                            _productList[index]['prtype'],
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontStyle: FontStyle.italic,
+                                                color: Colors.blueGrey),
+                                          ),
                                         ),
-                                      ]),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            5, 15, 5, 0),
-                                        child: Text(
-                                          _productList[index]['prtype'],
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontStyle: FontStyle.italic,
-                                              color: Colors.blueGrey),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      ],
+                                    ),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5, 5, 5, 0),
+                                            child: Text(
+                                              "Price: RM " +
+                                                  _productList[index]
+                                                      ['prprice'],
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                        ]),
+                                    Row(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               5, 5, 5, 0),
                                           child: Text(
-                                            "Price: RM " +
-                                                _productList[index]['prprice'],
+                                            "Quantity Available: " +
+                                                _productList[index]['prqty'],
                                             style: TextStyle(fontSize: 16),
                                           ),
                                         ),
-                                      ]),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            5, 5, 5, 0),
-                                        child: Text(
-                                          "Quantity Available: " +
-                                              _productList[index]['prqty'],
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -181,23 +185,18 @@ class _ProductListState extends State<ProductList> {
     );
   }
 
-  void _loadProducts() {
-    http.post(Uri.parse("http://yck99.com/myshop/php/loadproducts.php"), body: {
-      //     "name": widget.newProduct.name,
-      // "type": widget.newProduct.type,
-      // "price": widget.newProduct.price,
-      // "qty": widget.newProduct.qty,
-      // "encoded_string": widget.newProduct.base64Image,
-    }).then((response) {
-      if (response.body == "nodata") {
-        titleCenter = "No data";
-        return;
-      } else {
+  Future<void> _loadProducts() async {
+    http.post(Uri.parse("http://yck99.com/myshop/php/loadproducts.php"),
+        body: {}).then((response) {
+      if (response.body != "nodata") {
         var jsondata = json.decode(response.body);
         _productList = jsondata["products"];
         titleCenter = "Contain Data";
         setState(() {});
         print(_productList);
+      } else {
+        titleCenter = "No data";
+        return;
       }
     });
   }
