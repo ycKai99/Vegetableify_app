@@ -1,7 +1,14 @@
 <?php
 include_once("dbconnect.php");
-$sqlloadproducts= "SELECT * FROM tbl_products ORDER BY prid DESC";
-$result = $conn->query($sqlloadproducts);
+$prname = $_POST['prname'];
+
+if($prname == "all"){
+    $sql = "SELECT * FROM tbl_products";
+}else{
+    $sql = "SELECT * FROM tbl_products WHERE prname LIKE '%$prname%'";
+}
+
+$result = $conn->query($sql);
 
 if ($result->num_rows >= 0){
     $response["products"] = array();
@@ -19,3 +26,6 @@ if ($result->num_rows >= 0){
 }else{
     echo "nodata";
 }
+
+
+?>

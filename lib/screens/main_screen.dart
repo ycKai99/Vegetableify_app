@@ -4,6 +4,7 @@ import 'package:midtermstiw2044myshop/screens/cartscreen.dart';
 import 'package:midtermstiw2044myshop/screens/home_screen.dart';
 import 'package:midtermstiw2044myshop/screens/login_screen.dart';
 import 'package:midtermstiw2044myshop/screens/mydrawer.dart';
+import 'package:midtermstiw2044myshop/screens/post_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
@@ -152,12 +153,12 @@ class _MainScreenState extends State<MainScreen> {
                       padding: const EdgeInsets.fromLTRB(92, 0, 0, 0),
                       child: IconButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (content) => PostScreen(
-                            //               user: widget.user,
-                            //             )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (content) => PostScreen(
+                                          user: widget.user,
+                                        )));
                           },
                           icon: Icon(Icons.arrow_forward_ios_rounded)),
                     )
