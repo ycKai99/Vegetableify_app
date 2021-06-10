@@ -6,17 +6,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:midtermstiw2044myshop/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
+import 'package:midtermstiw2044myshop/models/user.dart';
 
 // ignore: must_be_immutable
 class NewProduct extends StatefulWidget {
-  String base64Image, name, type, price, qty;
-  NewProduct({
-    this.base64Image,
-    this.name,
-    this.type,
-    this.price,
-    this.qty,
-  });
+  final User user;
+
+  const NewProduct({Key key, this.user}) : super(key: key);
   @override
   _NewProductState createState() => _NewProductState();
 }
@@ -28,24 +24,15 @@ class _NewProductState extends State<NewProduct> {
   TextEditingController _priceController = new TextEditingController();
   TextEditingController _typeController = new TextEditingController();
   TextEditingController _qtyController = new TextEditingController();
-
+  String pathAsset = 'assets/images/camera.png';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('My Product')),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 200, 0),
-                child: ElevatedButton(
-                  child: Text('Back'),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProductList()));
-                  },
-                ),
-              ),
               Card(
                 margin: EdgeInsets.fromLTRB(30, 10, 30, 20),
                 elevation: 8,
@@ -61,25 +48,45 @@ class _NewProductState extends State<NewProduct> {
                                 fontSize: 23, fontWeight: FontWeight.bold)),
                       ),
                       SizedBox(height: 10),
-                      Text('Take a picture from',
-                          style: TextStyle(fontSize: 16)),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.photo_camera, size: 20),
-                            onPressed: () async => _pickImageFromCamera(),
-                          ),
-                          Text('Camera'),
-                          IconButton(
-                            icon: const Icon(Icons.photo, size: 20),
-                            onPressed: () async => _pickImageFromGallery(),
-                          ),
-                          Text('Gallery'),
-                        ],
-                      ),
-                      _image == null
-                          ? Text('No image selected.')
-                          : Image.file(_image),
+                      // Text('Take a picture from',
+                      //     style: TextStyle(fontSize: 16)),
+                      // Row(
+                      //   children: [
+                      //     IconButton(
+                      //       icon: const Icon(Icons.photo_camera, size: 20),
+                      //       onPressed: () async => _pickImageFromCamera(),
+                      //     ),
+                      //     Text('Camera'),
+                      //     IconButton(
+                      //       icon: const Icon(Icons.photo, size: 20),
+                      //       onPressed: () async => _pickImageFromGallery(),
+                      //     ),
+                      //     Text('Gallery'),
+                      //   ],
+                      // ),
+                      // _image == null
+                      //     ? Text('No image selected.')
+                      //     : Image.file(_image),
+                      GestureDetector(
+                          onTap: () => {_showDialog()},
+                          child: Column(
+                            children: [
+                              // IconButton(
+                              //     icon: Icon(Icons.camera, size: 60),
+                              //     onPressed: _showDialog),
+                              Container(
+                                  height: 200,
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: _image == null
+                                          ? AssetImage(pathAsset)
+                                          : FileImage(_image),
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  )),
+                            ],
+                          )),
                       TextField(
                         controller: _nameController,
                         keyboardType: TextInputType.name,
@@ -247,8 +254,8 @@ class _NewProductState extends State<NewProduct> {
           _qtyController.text = "";
         });
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProductList()));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => ProductList()));
       } else {
         Fluttertoast.showToast(
             msg: "Failed",
@@ -270,7 +277,7 @@ class _NewProductState extends State<NewProduct> {
         ],
         androidUiSettings: AndroidUiSettings(
             toolbarTitle: 'Crop your image',
-            toolbarColor: Colors.red,
+            toolbarColor: Colors.greenAccent,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),
@@ -282,5 +289,50 @@ class _NewProductState extends State<NewProduct> {
       _image = croppedFile;
       setState(() {});
     }
+  }
+
+  _showDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            content: new Container(
+              height: 90,
+              width: 25,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.photo_camera, size: 20),
+                          onPressed: () async =>
+                              {Navigator.pop(context), _pickImageFromCamera()},
+                        ),
+                        Text('Camera'),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.photo, size: 20),
+                          onPressed: () async =>
+                              {Navigator.pop(context), _pickImageFromGallery()},
+                        ),
+                        Text('Gallery'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 } //end newproduct
