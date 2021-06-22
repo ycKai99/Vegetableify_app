@@ -1,13 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:midtermstiw2044myshop/screens/splash_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:midtermstiw2044myshop/screens/cartscreen.dart';
-import 'package:midtermstiw2044myshop/screens/newproduct.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 void main() => runApp(MaterialApp(home: MyApp()));
 

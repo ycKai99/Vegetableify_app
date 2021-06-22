@@ -160,8 +160,12 @@ class _ProductListState extends State<ProductList> {
                                         "Qty: " + _productList[index]['prqty']),
                                     Container(
                                       child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.greenAccent),
                                         onPressed: () => {_addToCart(index)},
-                                        child: Text("Add to Cart"),
+                                        child: Text("Add to Cart",
+                                            style: TextStyle(
+                                                color: Colors.black87)),
                                       ),
                                     ),
                                   ],
@@ -187,9 +191,16 @@ class _ProductListState extends State<ProductList> {
         _productList = jsondata["products"];
         //titleCenter = "Contain Data";
         setState(() {});
-        //print(_productList);
+        print(_productList);
       } else {
-        titleCenter = "No product";
+        Fluttertoast.showToast(
+            msg: "No data",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Color.fromRGBO(191, 30, 46, 50),
+            textColor: Colors.white,
+            fontSize: 16.0);
         return;
       }
     });
@@ -277,7 +288,7 @@ class _ProductListState extends State<ProductList> {
         body: {"email": email}).then((response) {
       setState(() {
         cartitem = int.parse(response.body);
-        print(cartitem);
+        //print(cartitem);
       });
     });
   }

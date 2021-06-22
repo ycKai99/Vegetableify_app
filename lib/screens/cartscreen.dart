@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:midtermstiw2044myshop/models/user.dart';
-//import 'package:vegetableify/view/cart/checkout/checkoutpage.dart';
+import 'package:midtermstiw2044myshop/screens/checkout.dart';
 
 class CartScreen extends StatefulWidget {
   final String email;
@@ -28,8 +28,11 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('My Cart'),
+        backgroundColor: Color(0x440000000),
+        elevation: 0,
+        title: Text('My Cart', style: TextStyle(color: Colors.black)),
       ),
       body: Center(
         child: Column(
@@ -111,7 +114,7 @@ class _CartScreenState extends State<CartScreen> {
                                                             ['prprice']))
                                                 .toStringAsFixed(2),
                                         style: TextStyle(
-                                            color: Colors.red,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       )
@@ -139,24 +142,38 @@ class _CartScreenState extends State<CartScreen> {
             Container(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SizedBox(height: 5),
-                    Divider(
-                      color: Colors.red,
-                      height: 1,
-                      thickness: 10.0,
+                    // SizedBox(height: 5),
+                    // Divider(
+                    //   color: Colors.greenAccent,
+                    //   height: 1,
+                    //   thickness: 10.0,
+                    // ),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        children: [
+                          Text('TOTAL', style: TextStyle(fontSize: 15)),
+                          Text(
+                            "RM " + _totalprice.toStringAsFixed(2),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      "TOTAL RM " + _totalprice.toStringAsFixed(2),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _payDialog();
-                      },
-                      child: Text("PAY NOW"),
+                    Expanded(
+                      flex: 6,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.greenAccent),
+                        onPressed: () {
+                          _payDialog();
+                        },
+                        child: Text("CHECKOUT",
+                            style: TextStyle(color: Colors.black87)),
+                      ),
                     )
                   ],
                 )),
@@ -281,48 +298,47 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void _payDialog() {
-    //   if (_totalprice == 0.0) {
-    //     Fluttertoast.showToast(
-    //         msg: "Amount not payable",
-    //         toastLength: Toast.LENGTH_SHORT,
-    //         gravity: ToastGravity.CENTER,
-    //         timeInSecForIosWeb: 1,
-    //         backgroundColor: Colors.red,
-    //         textColor: Colors.white,
-    //         fontSize: 16.0);
-    //     return;
-    //   } else {
-    //     showDialog(
-    //         builder: (context) => new AlertDialog(
-    //                 shape: RoundedRectangleBorder(
-    //                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
-    //                 title: new Text(
-    //                   'Proceed with payment?',
-    //                   style: TextStyle(
-    //                     color: Colors.black,
-    //                   ),
-    //                 ),
-    //                 actions: <Widget>[
-    //                   TextButton(
-    //                     child: Text("Yes"),
-    //                     onPressed: () async {
-    //                       // Navigator.of(context).pop();
-    //                       // await Navigator.of(context).push(
-    //                       //   MaterialPageRoute(
-    //                       //     builder: (context) => CheckOutPage(
-    //                       //         email: widget.user.email, total: _totalprice),
-    //                       //   ),
-    //                       // );
-    //                     },
-    //                   ),
-    //                   TextButton(
-    //                       child: Text("No"),
-    //                       onPressed: () {
-    //                         Navigator.of(context).pop();
-    //                       }),
-    //                 ]),
-    //         context: context);
-    //   }
-    // }
+    if (_totalprice == 0.0) {
+      Fluttertoast.showToast(
+          msg: "Amount not payable",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return;
+    } else {
+      showDialog(
+          builder: (context) => new AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  title: new Text(
+                    'Continue with checkout?',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text("Yes"),
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Checkout(
+                                email: widget.email, totalPrice: _totalprice),
+                          ),
+                        );
+                      },
+                    ),
+                    TextButton(
+                        child: Text("No"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        }),
+                  ]),
+          context: context);
+    }
   }
 }

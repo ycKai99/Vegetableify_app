@@ -87,14 +87,17 @@ class _MainScreenState extends State<MainScreen> {
               child: Card(
                 child: Row(
                   children: [
-                    Icon(Icons.home, size: 25),
-                    SizedBox(width: 20),
-                    Text(
-                      'Home',
-                      style: TextStyle(fontSize: 20),
+                    Expanded(flex: 2, child: Icon(Icons.home, size: 25)),
+                    //SizedBox(width: 20),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        'Home',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(140, 0, 0, 0),
+                    Expanded(
+                      flex: 2,
                       child: IconButton(
                           onPressed: () {
                             Navigator.push(

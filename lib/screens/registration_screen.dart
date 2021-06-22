@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 import 'package:midtermstiw2044myshop/screens/login_screen.dart';
 
