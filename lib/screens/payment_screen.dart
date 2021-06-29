@@ -29,8 +29,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Expanded(
                 child: WebView(
                   initialUrl:
-                      //'https://slumberjer.com/myshopweb/mobile/generate_bill.php?email=' +
-                      widget.payment.email +
+                      'http://yck99.com/myshop/php/generate_bill.php?email=' +
+                          widget.payment.email +
                           '&mobile=' +
                           widget.payment.phone +
                           '&name=' +

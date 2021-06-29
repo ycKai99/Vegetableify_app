@@ -646,14 +646,14 @@ class _CheckoutState extends State<Checkout> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 title: new Text(
-                  'Pay RM ' + widget.totalPrice.toStringAsFixed(2) + "?",
+                  'Total RM ' + widget.totalPrice.toStringAsFixed(2) + "?",
                   style: TextStyle(
                     color: Colors.black,
                   ),
                 ),
                 actions: <Widget>[
                   TextButton(
-                    child: Text("Yes"),
+                    child: Text("Pay"),
                     onPressed: () async {
                       Navigator.of(context).pop();
                       Payment _pay = new Payment(widget.email, _phone, _name,
@@ -666,7 +666,7 @@ class _CheckoutState extends State<Checkout> {
                     },
                   ),
                   TextButton(
-                      child: Text("No"),
+                      child: Text("Cancel"),
                       onPressed: () {
                         Navigator.of(context).pop();
                       }),

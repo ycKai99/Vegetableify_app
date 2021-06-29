@@ -118,14 +118,18 @@ class _MainScreenState extends State<MainScreen> {
               child: Card(
                 child: Row(
                   children: [
-                    Icon(Icons.shopping_cart, size: 25),
-                    SizedBox(width: 20),
-                    Text(
-                      'My Cart',
-                      style: TextStyle(fontSize: 20),
+                    Expanded(
+                        flex: 2, child: Icon(Icons.shopping_cart, size: 25)),
+                    //SizedBox(width: 20),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        'My Cart',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(124, 0, 0, 0),
+                    Expanded(
+                      flex: 2,
                       child: IconButton(
                           onPressed: () {
                             Navigator.push(
@@ -146,14 +150,17 @@ class _MainScreenState extends State<MainScreen> {
               child: Card(
                 child: Row(
                   children: [
-                    Icon(Icons.list, size: 25),
-                    SizedBox(width: 20),
-                    Text(
-                      'My Product',
-                      style: TextStyle(fontSize: 20),
+                    Expanded(flex: 2, child: Icon(Icons.list, size: 25)),
+                    //SizedBox(width: 20),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        'My Product',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(92, 0, 0, 0),
+                    Expanded(
+                      flex: 2,
                       child: IconButton(
                           onPressed: () {
                             Navigator.push(
@@ -174,14 +181,17 @@ class _MainScreenState extends State<MainScreen> {
               child: Card(
                 child: Row(
                   children: [
-                    Icon(Icons.people, size: 25),
-                    SizedBox(width: 20),
-                    Text(
-                      'My Profile',
-                      style: TextStyle(fontSize: 20),
+                    Expanded(flex: 2, child: Icon(Icons.people, size: 25)),
+                    //SizedBox(width: 20),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        'My Profile',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(104, 0, 0, 0),
+                    Expanded(
+                      flex: 2,
                       child: IconButton(
                           onPressed: () {
                             // Navigator.push(
@@ -202,14 +212,17 @@ class _MainScreenState extends State<MainScreen> {
               child: Card(
                 child: Row(
                   children: [
-                    Icon(Icons.settings, size: 25),
-                    SizedBox(width: 20),
-                    Text(
-                      'Settings',
-                      style: TextStyle(fontSize: 20),
+                    Expanded(flex: 2, child: Icon(Icons.settings, size: 25)),
+                    //SizedBox(width: 20),
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        'Settings',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(120, 0, 0, 0),
+                    Expanded(
+                      flex: 2,
                       child: IconButton(
                           onPressed: () {
                             // Navigator.push(
