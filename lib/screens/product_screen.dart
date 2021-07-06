@@ -113,29 +113,20 @@ class _ProductScreenState extends State<ProductScreen> {
                                       Text("Qty: " +
                                           _productList[index]['prqty']),
                                       Container(
-                                          child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 5,
-                                            child: IconButton(
-                                                onPressed: _editProduct(index),
-                                                icon:
-                                                    Icon(Icons.edit_outlined)),
-                                          ),
-                                          Container(
-                                              height: screenHeight / 15,
-                                              child: VerticalDivider(
-                                                  color: Colors.grey)),
-                                          Expanded(
-                                            flex: 5,
-                                            child: IconButton(
-                                                onPressed:
-                                                    _deleteProduct(index),
-                                                icon:
-                                                    Icon(Icons.delete_outline)),
-                                          ),
-                                        ],
-                                      )),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.greenAccent),
+                                          onPressed: () =>
+                                              {_deleteProduct(index)},
+                                          child: AutoSizeText('Delete',
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black87),
+                                              minFontSize: 1,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),

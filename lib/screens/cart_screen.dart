@@ -28,17 +28,17 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Color(0x440000000),
-        elevation: 0,
         title: Text('My Cart', style: TextStyle(color: Colors.black)),
       ),
       body: Center(
         child: Column(
           children: [
             if (_cartList.isEmpty)
-              Flexible(child: Center(child: Text(_titlecenter)))
+              Flexible(
+                  child: Center(
+                      child:
+                          Text(_titlecenter, style: TextStyle(fontSize: 18))))
             else
               Flexible(
                   child: OrientationBuilder(builder: (context, orientation) {
@@ -142,14 +142,7 @@ class _CartScreenState extends State<CartScreen> {
             Container(
                 padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                 child: Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // SizedBox(height: 5),
-                    // Divider(
-                    //   color: Colors.greenAccent,
-                    //   height: 1,
-                    //   thickness: 10.0,
-                    // ),
                     Expanded(
                       flex: 4,
                       child: Column(

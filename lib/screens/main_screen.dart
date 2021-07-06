@@ -221,40 +221,6 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
-            // Expanded(
-            //   flex: 1,
-            //   child: Card(
-            //     elevation: 3,
-            //     child: Row(
-            //       children: [
-            //         Expanded(flex: 2, child: Icon(Icons.settings, size: 25)),
-            //         Container(
-            //             height: screenHeight / 6.5,
-            //             child: VerticalDivider(color: Colors.grey)),
-            //         Expanded(
-            //           flex: 6,
-            //           child: Text(
-            //             'Settings',
-            //             style: TextStyle(fontSize: 20),
-            //           ),
-            //         ),
-            //         Expanded(
-            //           flex: 2,
-            //           child: IconButton(
-            //               onPressed: () {
-            //                 // Navigator.push(
-            //                 //     context,
-            //                 //     MaterialPageRoute(
-            //                 //         builder: (content) => TestScreen(
-            //                 //               user: widget.user,
-            //                 //             )));
-            //               },
-            //               icon: Icon(Icons.arrow_forward_ios_rounded)),
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         )),
       ),
