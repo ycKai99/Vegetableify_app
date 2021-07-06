@@ -1,8 +1,7 @@
 class User {
-  String name, email, password, datereg, rating, point, status;
+  String email, password, datereg, rating, point, status;
   User(
-      {this.name,
-      this.email,
+      {this.email,
       this.password,
       this.datereg,
       this.rating,

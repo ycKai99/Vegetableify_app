@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/checkout.dart';
+import 'package:midtermstiw2044myshop/screens/checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
   final String email;
@@ -17,7 +17,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List _cartList = [];
-  String _titlecenter = "Loading...";
+  String _titlecenter = "No product in my cart...";
   double _totalprice = 0.0;
   @override
   void initState() {
@@ -184,18 +184,17 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   _loadMyCart() {
-    http.post(Uri.parse("http://yck99.com/myshop/php/loadusercart.php"),
-        body: {"email": widget.email}).then((response) {
+    http.post(Uri.parse("http://yck99.com/myshop/php/load_user_cart.php"),
+        body: {"email": widget.user.email}).then((response) {
       print(response.body);
       if (response.body == "nodata") {
-        _titlecenter = "No item";
+        _titlecenter = "No product in my cart...";
         _cartList = [];
         return;
       } else {
         var jsondata = json.decode(response.body);
         print(jsondata);
         _cartList = jsondata["cart"];
-
         _titlecenter = "";
         _totalprice = 0.0;
         for (int i = 0; i < _cartList.length; i++) {
@@ -209,8 +208,8 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void _modQty(int index, String action) {
-    http.post(Uri.parse("http://yck99.com/myshop/php/updatecart.php"), body: {
-      "email": widget.email,
+    http.post(Uri.parse("http://yck99.com/myshop/php/update_cart.php"), body: {
+      "email": widget.user.email,
       "op": action,
       "prid": _cartList[index]['prid'],
       "cartqty": _cartList[index]['cartqty']
@@ -268,7 +267,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void _deleteCart(int index) {
-    http.post(Uri.parse("http://yck99.com/myshop/php/deletecart.php"), body: {
+    http.post(Uri.parse("http://yck99.com/myshop/php/delete_cart.php"), body: {
       "email": widget.email,
       "prid": _cartList[index]['prid']
     }).then((response) {

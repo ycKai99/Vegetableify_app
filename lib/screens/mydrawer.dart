@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:midtermstiw2044myshop/models/payment.dart';
 import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/cartscreen.dart';
+import 'package:midtermstiw2044myshop/screens/cart_screen.dart';
 import 'package:midtermstiw2044myshop/screens/home_screen.dart';
 import 'package:midtermstiw2044myshop/screens/main_screen.dart';
 
 class MyDrawer extends StatefulWidget {
   final User user;
-
-  const MyDrawer({Key key, this.user}) : super(key: key);
+  final Payment payment;
+  const MyDrawer({Key key, this.user, this.payment}) : super(key: key);
   @override
   _MyDrawerState createState() => _MyDrawerState();
 }
@@ -19,7 +20,7 @@ class _MyDrawerState extends State<MyDrawer> {
         child: ListView(
       children: [
         UserAccountsDrawerHeader(
-          accountEmail: Text('yck0146859295@gmail.com'),
+          accountEmail: Text(widget.user.email),
           currentAccountPicture: CircleAvatar(
             backgroundColor:
                 Theme.of(context).platform == TargetPlatform.android
@@ -29,7 +30,7 @@ class _MyDrawerState extends State<MyDrawer> {
               "assets/images/profilea.png",
             ),
           ),
-          accountName: Text('Your name'),
+          accountName: Text('chee kai'),
         ),
         ListTile(
             title: Text("Dashboard"),
@@ -79,7 +80,7 @@ class _MyDrawerState extends State<MyDrawer> {
               //             )));
             }),
         ListTile(
-            title: Text("My Profile"),
+            title: Text("My Payment"),
             trailing: Icon(Icons.arrow_forward),
             onTap: () {
               Navigator.pop(context);

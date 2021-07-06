@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:midtermstiw2044myshop/models/payment.dart';
 import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/cartscreen.dart';
+//import 'package:midtermstiw2044myshop/screens/cartscreen.dart';
 import 'package:midtermstiw2044myshop/screens/home_screen.dart';
 import 'package:midtermstiw2044myshop/screens/login_screen.dart';
 import 'package:midtermstiw2044myshop/screens/mydrawer.dart';
 import 'package:midtermstiw2044myshop/screens/post_screen.dart';
+//import 'package:midtermstiw2044myshop/screens/profile.dart';
+import 'cart_screen.dart';
+import 'recent_payment_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
-  MainScreen({Key key, this.user}) : super(key: key);
+  final Payment payment;
+  MainScreen({Key key, this.user, this.payment}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -17,7 +22,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List<Widget> tabchildren;
   String title = "";
-
   double screenHeight, screenWidth;
   Material homeText(IconData icon, String heading, int color) {
     return Material(
@@ -67,28 +71,29 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //screenHeight = MediaQuery.of(context).size.height;
-    //screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
 
-    return
-        //Scaffold(
-        WillPopScope(
+    return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Dashboard'),
         ),
-        drawer: MyDrawer(user: widget.user),
+        drawer: MyDrawer(user: widget.user, payment: widget.payment),
         body: Center(
             child: Column(
           children: <Widget>[
             Expanded(
               flex: 1,
               child: Card(
+                elevation: 3,
                 child: Row(
                   children: [
                     Expanded(flex: 2, child: Icon(Icons.home, size: 25)),
-                    //SizedBox(width: 20),
+                    Container(
+                        height: screenHeight / 5,
+                        child: VerticalDivider(color: Colors.grey)),
                     Expanded(
                       flex: 6,
                       child: Text(
@@ -116,11 +121,14 @@ class _MainScreenState extends State<MainScreen> {
             Expanded(
               flex: 1,
               child: Card(
+                elevation: 3,
                 child: Row(
                   children: [
                     Expanded(
                         flex: 2, child: Icon(Icons.shopping_cart, size: 25)),
-                    //SizedBox(width: 20),
+                    Container(
+                        height: screenHeight / 5,
+                        child: VerticalDivider(color: Colors.grey)),
                     Expanded(
                       flex: 6,
                       child: Text(
@@ -148,10 +156,13 @@ class _MainScreenState extends State<MainScreen> {
             Expanded(
               flex: 1,
               child: Card(
+                elevation: 3,
                 child: Row(
                   children: [
                     Expanded(flex: 2, child: Icon(Icons.list, size: 25)),
-                    //SizedBox(width: 20),
+                    Container(
+                        height: screenHeight / 5,
+                        child: VerticalDivider(color: Colors.grey)),
                     Expanded(
                       flex: 6,
                       child: Text(
@@ -179,14 +190,17 @@ class _MainScreenState extends State<MainScreen> {
             Expanded(
               flex: 1,
               child: Card(
+                elevation: 3,
                 child: Row(
                   children: [
-                    Expanded(flex: 2, child: Icon(Icons.people, size: 25)),
-                    //SizedBox(width: 20),
+                    Expanded(flex: 2, child: Icon(Icons.history, size: 25)),
+                    Container(
+                        height: screenHeight / 5,
+                        child: VerticalDivider(color: Colors.grey)),
                     Expanded(
                       flex: 6,
                       child: Text(
-                        'My Profile',
+                        'My Payment',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -194,12 +208,12 @@ class _MainScreenState extends State<MainScreen> {
                       flex: 2,
                       child: IconButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (content) => ProfileScreen(
-                            //               user: widget.user,
-                            //             )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (content) => HistoryScreen(
+                                        user: widget.user,
+                                        payment: widget.payment)));
                           },
                           icon: Icon(Icons.arrow_forward_ios_rounded)),
                     )
@@ -207,37 +221,40 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: Card(
-                child: Row(
-                  children: [
-                    Expanded(flex: 2, child: Icon(Icons.settings, size: 25)),
-                    //SizedBox(width: 20),
-                    Expanded(
-                      flex: 6,
-                      child: Text(
-                        'Settings',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: IconButton(
-                          onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (content) => TestScreen(
-                            //               user: widget.user,
-                            //             )));
-                          },
-                          icon: Icon(Icons.arrow_forward_ios_rounded)),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            // Expanded(
+            //   flex: 1,
+            //   child: Card(
+            //     elevation: 3,
+            //     child: Row(
+            //       children: [
+            //         Expanded(flex: 2, child: Icon(Icons.settings, size: 25)),
+            //         Container(
+            //             height: screenHeight / 6.5,
+            //             child: VerticalDivider(color: Colors.grey)),
+            //         Expanded(
+            //           flex: 6,
+            //           child: Text(
+            //             'Settings',
+            //             style: TextStyle(fontSize: 20),
+            //           ),
+            //         ),
+            //         Expanded(
+            //           flex: 2,
+            //           child: IconButton(
+            //               onPressed: () {
+            //                 // Navigator.push(
+            //                 //     context,
+            //                 //     MaterialPageRoute(
+            //                 //         builder: (content) => TestScreen(
+            //                 //               user: widget.user,
+            //                 //             )));
+            //               },
+            //               icon: Icon(Icons.arrow_forward_ios_rounded)),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         )),
       ),

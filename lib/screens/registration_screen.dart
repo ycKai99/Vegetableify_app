@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:midtermstiw2044myshop/screens/login_screen.dart';
-
+import 'package:http/http.dart' as http;
 /* Step for register user
 1. enter email and password format
 
@@ -191,15 +191,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   } //end register
 
   void _registerUser(String email, String password) {
-    // http.post(Uri.parse("http://yck99.com/vegetableify/php/register_user.php"),
-    //     body: {"email": email, "password": password}).then((response) {
-    //   print(response.body);
-    //   if (response.body == "success") {
-    //     showToast(2);
-    //   } else {
-    //     showToast(3);
-    //   }
-    // });
+    http.post(Uri.parse("http://yck99.com/myshop/php/register_user.php"),
+        body: {"email": email, "password": password}).then((response) {
+      print(response.body);
+      if (response.body == "success") {
+        showToast(2);
+      } else {
+        showToast(3);
+      }
+    });
   } //end register
 
   void _checkEmailPassword(String email, String password, String confPassword) {

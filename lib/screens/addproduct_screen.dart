@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:midtermstiw2044myshop/models/user.dart';
 
-// ignore: must_be_immutable
 class NewProduct extends StatefulWidget {
   final User user;
 
@@ -27,13 +26,18 @@ class _NewProductState extends State<NewProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Product')),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text('My Product', style: TextStyle(color: Colors.black)),
+        backgroundColor: Color(0x440000000),
+        elevation: 0,
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Card(
-                margin: EdgeInsets.fromLTRB(30, 10, 30, 20),
+                margin: EdgeInsets.fromLTRB(30, 90, 30, 20),
                 elevation: 8,
                 shadowColor: Colors.grey,
                 child: Padding(
@@ -47,32 +51,10 @@ class _NewProductState extends State<NewProduct> {
                                 fontSize: 23, fontWeight: FontWeight.bold)),
                       ),
                       SizedBox(height: 10),
-                      // Text('Take a picture from',
-                      //     style: TextStyle(fontSize: 16)),
-                      // Row(
-                      //   children: [
-                      //     IconButton(
-                      //       icon: const Icon(Icons.photo_camera, size: 20),
-                      //       onPressed: () async => _pickImageFromCamera(),
-                      //     ),
-                      //     Text('Camera'),
-                      //     IconButton(
-                      //       icon: const Icon(Icons.photo, size: 20),
-                      //       onPressed: () async => _pickImageFromGallery(),
-                      //     ),
-                      //     Text('Gallery'),
-                      //   ],
-                      // ),
-                      // _image == null
-                      //     ? Text('No image selected.')
-                      //     : Image.file(_image),
                       GestureDetector(
                           onTap: () => {_showDialog()},
                           child: Column(
                             children: [
-                              // IconButton(
-                              //     icon: Icon(Icons.camera, size: 60),
-                              //     onPressed: _showDialog),
                               Container(
                                   height: 200,
                                   width: 200,
@@ -123,10 +105,10 @@ class _NewProductState extends State<NewProduct> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15)),
                           minWidth: 150,
-                          color: Colors.blueAccent,
+                          color: Colors.greenAccent,
                           child: Text('Add',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15)),
+                              style: TextStyle(
+                                  color: Colors.black87, fontSize: 15)),
                           onPressed: _confirmDialog,
                         ),
                       ),
@@ -227,7 +209,7 @@ class _NewProductState extends State<NewProduct> {
 
   Future<void> _addProduct(String name, String type, String price, String qty,
       String base64Image) async {
-    http.post(Uri.parse("http://yck99.com/myshop/php/newproduct.php"), body: {
+    http.post(Uri.parse("http://yck99.com/myshop/php/add_product.php"), body: {
       "name": name,
       "type": type,
       "price": price,
@@ -235,7 +217,6 @@ class _NewProductState extends State<NewProduct> {
       "encoded_string": base64Image,
     }).then((response) {
       print(response.body);
-
       if (response.body == "success") {
         Fluttertoast.showToast(
             msg: "Success",
@@ -252,9 +233,6 @@ class _NewProductState extends State<NewProduct> {
           _priceController.text = "";
           _qtyController.text = "";
         });
-
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => ProductList()));
       } else {
         Fluttertoast.showToast(
             msg: "Failed",

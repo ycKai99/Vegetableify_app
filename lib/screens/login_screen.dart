@@ -246,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
           RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,10}$')
                   .hasMatch(password) ==
               true) {
-        http.post(Uri.parse("http://yck99.com/vegetableify/php/login_user.php"),
+        http.post(Uri.parse("http://yck99.com/myshop/php/login_user.php"),
             body: {"email": email, "password": password}).then((response) {
           print(response.body);
           if (response.body == "failed") {
@@ -254,13 +254,13 @@ class _LoginScreenState extends State<LoginScreen> {
           } else {
             List userdata = response.body.split(",");
             User user = User(
-                email: email,
-                password: password,
-                name: userdata[1],
-                datereg: userdata[2],
-                rating: userdata[3],
-                point: userdata[4],
-                status: userdata[5]);
+              email: email,
+              password: password,
+              // datereg: userdata[3],
+              // rating: userdata[4],
+              // point: userdata[5],
+              // status: userdata[6]
+            );
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -319,7 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _resetPassword(String email) {
-    http.post(Uri.parse("http://yck99.com/vegetableify/php/reset_password.php"),
+    http.post(Uri.parse("http://yck99.com/myshop/php/reset_password.php"),
         body: {"email": email}).then((response) {
       print(response.body);
       if (response.body == "success") {

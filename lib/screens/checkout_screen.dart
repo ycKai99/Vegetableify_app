@@ -4,19 +4,20 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:midtermstiw2044myshop/models/delivery.dart';
 import 'package:midtermstiw2044myshop/models/payment.dart';
+import 'package:midtermstiw2044myshop/models/user.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-
 import 'map_screen.dart';
 import 'payment_screen.dart';
 
 class Checkout extends StatefulWidget {
   final String email;
   final double totalPrice;
-
-  const Checkout({Key key, this.email, this.totalPrice}) : super(key: key);
+  final User user;
+  const Checkout({Key key, this.email, this.totalPrice, this.user})
+      : super(key: key);
   @override
   _CheckoutState createState() => _CheckoutState();
 }
@@ -641,6 +642,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   void _payDialog() {
+    print(widget.email);
     showDialog(
         builder: (context) => new AlertDialog(
                 shape: RoundedRectangleBorder(

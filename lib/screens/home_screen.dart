@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/cartscreen.dart';
+import 'package:midtermstiw2044myshop/screens/cart_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,15 +21,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Shop',
       home: Scaffold(
-        body: ProductList(),
+        body: ProductList(user: widget.user),
       ),
     );
   }
 } //end of class _HomeScreen
 
 class ProductList extends StatefulWidget {
+  final User user;
+
+  const ProductList({Key key, this.user}) : super(key: key);
   @override
   _ProductListState createState() => _ProductListState();
 }
@@ -138,15 +141,11 @@ class _ProductListState extends State<ProductList> {
                                         height: 300,
                                         width: 300,
                                       ),
-                                      // Image.network(CONFIG.SERVER +
-                                      //     _productList[index]['picture']),
                                     ),
                                     Text(
-                                      //'test',
                                       titleSub(
                                         _productList[index]['prname'],
                                       ),
-
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -163,9 +162,13 @@ class _ProductListState extends State<ProductList> {
                                         style: ElevatedButton.styleFrom(
                                             primary: Colors.greenAccent),
                                         onPressed: () => {_addToCart(index)},
-                                        child: Text("Add to Cart",
+                                        child: AutoSizeText('Add to Cart',
                                             style: TextStyle(
-                                                color: Colors.black87)),
+                                                fontSize: 15,
+                                                color: Colors.black87),
+                                            minFontSize: 1,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis),
                                       ),
                                     ),
                                   ],
@@ -184,14 +187,14 @@ class _ProductListState extends State<ProductList> {
   }
 
   _loadProducts(String prname) {
-    http.post(Uri.parse("http://yck99.com/myshop/php/loadproducts.php"),
+    http.post(Uri.parse("http://yck99.com/myshop/php/load_products.php"),
         body: {"prname": prname}).then((response) {
       if (response.body != "nodata") {
         var jsondata = json.decode(response.body);
         _productList = jsondata["products"];
         //titleCenter = "Contain Data";
         setState(() {});
-        print(_productList);
+        //print(_productList);
       } else {
         Fluttertoast.showToast(
             msg: "No data",
@@ -220,7 +223,7 @@ class _ProductListState extends State<ProductList> {
     } else {
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => CartScreen(email: email),
+          builder: (context) => CartScreen(email: email, user: widget.user),
         ),
       );
       _loadProducts("all");
@@ -232,8 +235,8 @@ class _ProductListState extends State<ProductList> {
       _loademaildialog();
     } else {
       String prid = _productList[index]['prid'];
-      http.post(Uri.parse("http://yck99.com/myshop/php/insertcart.php"),
-          body: {"email": email, "prid": prid}).then((response) {
+      http.post(Uri.parse("http://yck99.com/myshop/php/insert_cart.php"),
+          body: {"email": widget.user.email, "prid": prid}).then((response) {
         print(response.body);
         if (response.body == "failed") {
           Fluttertoast.showToast(
@@ -284,8 +287,8 @@ class _ProductListState extends State<ProductList> {
 
   void _loadCart() {
     print(email);
-    http.post(Uri.parse("http://yck99.com/myshop/php/loadcartitem.php"),
-        body: {"email": email}).then((response) {
+    http.post(Uri.parse("http://yck99.com/myshop/php/load_cart_item.php"),
+        body: {"email": widget.user.email}).then((response) {
       setState(() {
         cartitem = int.parse(response.body);
         //print(cartitem);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/newproduct.dart';
+import 'package:midtermstiw2044myshop/screens/addproduct_screen.dart';
+
+import 'product_screen.dart';
 
 class PostScreen extends StatefulWidget {
   final User user;
@@ -11,8 +13,12 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  double screenHeight, screenWidth;
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(title: Text('My Product')),
       body: Center(
@@ -21,24 +27,30 @@ class _PostScreenState extends State<PostScreen> {
           Expanded(
             flex: 1,
             child: Card(
+              elevation: 3,
               child: Row(
                 children: [
-                  Icon(Icons.list, size: 25),
-                  SizedBox(width: 20),
-                  Text(
-                    'Product List',
-                    style: TextStyle(fontSize: 20),
+                  Expanded(flex: 2, child: Icon(Icons.list, size: 25)),
+                  Container(
+                      height: screenHeight / 2,
+                      child: VerticalDivider(color: Colors.grey)),
+                  Expanded(
+                    flex: 6,
+                    child: Text(
+                      'Product List',
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
+                  Expanded(
+                    flex: 2,
                     child: IconButton(
                         onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (content) => ProductListScreen(
-                          //               user: widget.user,
-                          //             )));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (content) => ProductScreen(
+                                        user: widget.user,
+                                      )));
                         },
                         icon: Icon(Icons.arrow_forward_ios_rounded)),
                   )
@@ -49,16 +61,22 @@ class _PostScreenState extends State<PostScreen> {
           Expanded(
             flex: 1,
             child: Card(
+              elevation: 3,
               child: Row(
                 children: [
-                  Icon(Icons.add, size: 25),
-                  SizedBox(width: 20),
-                  Text(
-                    'Add Product',
-                    style: TextStyle(fontSize: 20),
+                  Expanded(flex: 2, child: Icon(Icons.add, size: 25)),
+                  Container(
+                      height: screenHeight / 2,
+                      child: VerticalDivider(color: Colors.grey)),
+                  Expanded(
+                    flex: 6,
+                    child: Text(
+                      'Add Product',
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                  Expanded(
+                    flex: 2,
                     child: IconButton(
                         onPressed: () {
                           Navigator.push(
