@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:midtermstiw2044myshop/models/payment.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
-//import 'package:midtermstiw2044myshop/screens/cartscreen.dart';
-import 'package:midtermstiw2044myshop/screens/home_screen.dart';
-import 'package:midtermstiw2044myshop/screens/login_screen.dart';
-import 'package:midtermstiw2044myshop/screens/mydrawer.dart';
-import 'package:midtermstiw2044myshop/screens/post_screen.dart';
-//import 'package:midtermstiw2044myshop/screens/profile.dart';
+import 'mydrawer.dart';
+import 'home_screen.dart';
+import 'post_screen.dart';
 import 'cart_screen.dart';
+import '/models/user.dart';
+import 'login_screen.dart';
+import '/models/payment.dart';
 import 'recent_payment_screen.dart';
+import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
@@ -23,51 +21,6 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> tabchildren;
   String title = "";
   double screenHeight, screenWidth;
-  Material homeText(IconData icon, String heading, int color) {
-    return Material(
-      color: Colors.white,
-      elevation: 14.0,
-      shadowColor: Color(0x802196F3),
-      borderRadius: BorderRadius.circular(10.0),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      heading,
-                      style: TextStyle(
-                        color: new Color(color),
-                        fontSize: 14.0,
-                      ),
-                    ),
-                  ),
-                  Material(
-                    color: new Color(color),
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Icon(
-                        icon,
-                        color: Colors.white,
-                        size: 30.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -244,7 +197,6 @@ class _MainScreenState extends State<MainScreen> {
             actions: <Widget>[
               MaterialButton(
                   onPressed: () {
-                    //Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (content) => LoginScreen()));
                   },
@@ -265,4 +217,4 @@ class _MainScreenState extends State<MainScreen> {
         ) ??
         false;
   }
-}
+}//end main_screen;

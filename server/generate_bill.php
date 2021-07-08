@@ -18,8 +18,8 @@ $data = array(
           'name' => $name,
           'amount' => $amount * 100, // RM20
 		  'description' => 'Payment for order' ,
-          'callback_url' => "http://yck99.com/myshopweb/php/return_url",
-          'redirect_url' => "http://yck99.com/myshopweb/php/payment_update.php?userid=$email&mobile=$mobile&amount=$amount" 
+          'callback_url' => "http://yck99.com/myshop/php/return_url",
+          'redirect_url' => "http://yck99.com/myshop/php/update_payment.php?userid=$email&mobile=$mobile&amount=$amount" 
 );
 
 

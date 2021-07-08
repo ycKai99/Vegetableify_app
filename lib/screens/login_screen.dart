@@ -1,10 +1,10 @@
+import '/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:midtermstiw2044myshop/screens/main_screen.dart';
 import 'package:midtermstiw2044myshop/screens/registration_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   final User user;
@@ -19,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   SharedPreferences sharedPref;
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
-
   @override
   void initState() {
     loadPreference();
@@ -87,8 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
                           child: MaterialButton(
                             highlightElevation: 10,
+                            hoverElevation: 20,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
+                                borderRadius: BorderRadius.circular(18)),
                             minWidth: 150,
                             color: Colors.greenAccent,
                             child: Text('Login',
@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.black, fontSize: 15)),
                             onPressed: _login,
                           ),
-                        ), //login button
+                        ),
                       ],
                     ),
                   ),
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  } //end build content
+  }
 
   void _onChange(bool value) {
     String _email = _emailController.text.toString();
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _rememberMe = value;
       savePreference(value, _email, _password);
     });
-  } //end onChange
+  }
 
   Future<void> savePreference(bool value, String email, String password) async {
     sharedPref = await SharedPreferences.getInstance();
@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       return;
     }
-  } //end savePreference
+  }
 
   Future<void> loadPreference() async {
     sharedPref = await SharedPreferences.getInstance();
@@ -188,19 +188,18 @@ class _LoginScreenState extends State<LoginScreen> {
       _emailController.text = _email;
       _passwordController.text = _password;
     });
-  } //end loadPreference
+  }
 
   void _regNewUser() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => RegistrationScreen()));
-  } //end regNewUser
+  }
 
   void _forgotPassword() {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            //title: Text("Forgot Password"),
             content: new Container(
               height: 80,
               child: Column(
@@ -227,14 +226,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   }),
             ],
           );
-        }); //end showDialog
-  } //end forgotPassword
+        });
+  }
 
   void _login() {
     String _email = _emailController.text.toString();
     String _password = _passwordController.text.toString();
     _checkEmailPassword(_email, _password);
-  } //end login
+  }
 
   void _checkEmailPassword(String email, String password) {
     if (email.isEmpty == true || password.isEmpty == true) {
@@ -252,14 +251,9 @@ class _LoginScreenState extends State<LoginScreen> {
           if (response.body == "failed") {
             showToast(3);
           } else {
-            List userdata = response.body.split(",");
             User user = User(
               email: email,
               password: password,
-              // datereg: userdata[3],
-              // rating: userdata[4],
-              // point: userdata[5],
-              // status: userdata[6]
             );
             Navigator.push(
                 context,
@@ -271,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
         showToast(0);
       }
     }
-  } //end _checkEmailPassword
+  }
 
   void showToast(int num) {
     switch (num) {
@@ -342,7 +336,5 @@ class _LoginScreenState extends State<LoginScreen> {
             fontSize: 15);
       }
     });
-  } //end _resetPassword
-
+  }
 } //end login screen
-

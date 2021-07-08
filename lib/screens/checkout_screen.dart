@@ -1,16 +1,16 @@
-import 'package:date_format/date_format.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
-import 'package:midtermstiw2044myshop/models/delivery.dart';
-import 'package:midtermstiw2044myshop/models/payment.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:ndialog/ndialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
 import 'map_screen.dart';
+import '/models/user.dart';
 import 'payment_screen.dart';
+import '/models/payment.dart';
+import '/models/delivery.dart';
+import 'package:intl/intl.dart';
+import 'package:ndialog/ndialog.dart';
+import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:date_format/date_format.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Checkout extends StatefulWidget {
   final String email;
@@ -23,13 +23,13 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout> {
-  String address = "";
   int _radioValue = 0;
-  String _delivery = "Pickup";
   bool _statusdel = false;
   bool _statuspickup = true;
-  String _selectedtime = "09:00 A.M";
+  String address = "";
   String _curtime = "";
+  String _delivery = "Pickup";
+  String _selectedtime = "09:00 A.M";
   String _name = "Write your name here";
   String _phone = "Write your phone number here";
   SharedPreferences prefs;
@@ -58,7 +58,9 @@ class _CheckoutState extends State<Checkout> {
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(title: Text('Payment')),
+        appBar: AppBar(
+            title: Text('Payment', style: TextStyle(color: Colors.black87)),
+            backgroundColor: Colors.green[200]),
         body: Column(
           children: <Widget>[
             Expanded(
@@ -290,10 +292,6 @@ class _CheckoutState extends State<Checkout> {
                                                     color: Colors.black87)),
                                           ),
                                         ),
-                                        // Divider(
-                                        //   color: Colors.grey,
-                                        //   height: 2,
-                                        // ),
                                         Container(
                                           width: 160,
                                           child: ElevatedButton(
@@ -335,10 +333,8 @@ class _CheckoutState extends State<Checkout> {
                                               border: OutlineInputBorder(),
                                               hintText: 'Search/Enter address'),
                                           keyboardType: TextInputType.multiline,
-                                          minLines:
-                                              4, //Normal textInputField will be displayed
-                                          maxLines:
-                                              4, // when user presses enter it will adapt to it
+                                          minLines: 4,
+                                          maxLines: 4,
                                         ),
                                       ],
                                     )),
@@ -356,14 +352,7 @@ class _CheckoutState extends State<Checkout> {
                   Container(
                       padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
                       child: Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          // SizedBox(height: 5),
-                          // Divider(
-                          //   color: Colors.greenAccent,
-                          //   height: 1,
-                          //   thickness: 10.0,
-                          // ),
                           Expanded(
                             flex: 4,
                             child: Column(
@@ -543,7 +532,6 @@ class _CheckoutState extends State<Checkout> {
     String year = DateFormat('y').format(now);
     String month = DateFormat('M').format(now);
     String day = DateFormat('d').format(now);
-
     String _hour, _minute, _time = "";
     final TimeOfDay picked = await showTimePicker(
       context: context,
@@ -612,14 +600,12 @@ class _CheckoutState extends State<Checkout> {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
     return await Geolocator.getCurrentPosition();
   }
 
   void _getPlace(Position pos) async {
     List<Placemark> newPlace =
         await placemarkFromCoordinates(pos.latitude, pos.longitude);
-
     Placemark placeMark = newPlace[0];
     String name = placeMark.name.toString();
     String subLocality = placeMark.subLocality.toString();
@@ -675,4 +661,4 @@ class _CheckoutState extends State<Checkout> {
                 ]),
         context: context);
   }
-}//end checkout 
+}//end checkout screen

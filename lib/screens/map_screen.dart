@@ -1,11 +1,11 @@
-import 'dart:async';
 import 'dart:math';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'dart:async';
+import '/models/delivery.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:midtermstiw2044myshop/models/delivery.dart';
-import 'package:ndialog/ndialog.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -37,7 +37,8 @@ class _MapState extends State<MapScreen> {
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Location'),
+        title: Text('Select Location', style: TextStyle(color: Colors.black87)),
+        backgroundColor: Colors.green[200],
       ),
       body: Center(
         child: Container(
@@ -70,14 +71,6 @@ class _MapState extends State<MapScreen> {
                         child: Column(
                           children: [
                             SizedBox(height: 10),
-                            // Padding(
-                            //   padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
-                            //   child: Text(
-                            //       "Please select your delivery location from map",
-                            //       style: TextStyle(
-                            //           fontSize: 15,
-                            //           fontWeight: FontWeight.bold)),
-                            // ),
                             AutoSizeText(
                               "Please select your delivery location from map",
                               style: TextStyle(
@@ -159,8 +152,6 @@ class _MapState extends State<MapScreen> {
     progressDialog.show();
     List<Placemark> newPlace =
         await placemarkFromCoordinates(newLatLng.latitude, newLatLng.longitude);
-
-    // this is all you need
     Placemark placeMark = newPlace[0];
     String name = placeMark.name.toString();
     String subLocality = placeMark.subLocality.toString();
@@ -205,4 +196,4 @@ class _MapState extends State<MapScreen> {
         c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
     return 12742 * asin(sqrt(a));
   }
-}
+}//end map screen

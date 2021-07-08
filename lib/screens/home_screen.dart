@@ -1,42 +1,22 @@
 import 'dart:convert';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'cart_screen.dart';
+import '/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/cart_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
-
   const HomeScreen({Key key, this.user}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: ProductList(user: widget.user),
-      ),
-    );
-  }
-} //end of class _HomeScreen
-
-class ProductList extends StatefulWidget {
-  final User user;
-
-  const ProductList({Key key, this.user}) : super(key: key);
-  @override
-  _ProductListState createState() => _ProductListState();
-}
-
-class _ProductListState extends State<ProductList> {
   List _productList = [];
   String titleCenter = "Loading...";
   double screenHeight, screenWidth;
@@ -61,16 +41,17 @@ class _ProductListState extends State<ProductList> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
+        backgroundColor: Colors.green[150],
         actions: [
           TextButton.icon(
               onPressed: () => {_goCart()},
               icon: Icon(
                 Icons.shopping_cart,
-                color: Colors.white,
+                color: Colors.black,
               ),
               label: Text(
                 cartitem.toString(),
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               )),
         ],
       ),
@@ -79,7 +60,7 @@ class _ProductListState extends State<ProductList> {
           children: [
             Container(
                 width: 250,
-                height: 100,
+                height: 75,
                 padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                 child: Column(
                   children: [
@@ -116,7 +97,6 @@ class _ProductListState extends State<ProductList> {
                       return Column(
                         children: [
                           Container(
-                            //color: Colors.red,
                             child: Card(
                               elevation: 10,
                               child: Padding(
@@ -192,18 +172,10 @@ class _ProductListState extends State<ProductList> {
       if (response.body != "nodata") {
         var jsondata = json.decode(response.body);
         _productList = jsondata["products"];
-        //titleCenter = "Contain Data";
+        print("Success");
         setState(() {});
-        //print(_productList);
       } else {
-        Fluttertoast.showToast(
-            msg: "No data",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Color.fromRGBO(191, 30, 46, 50),
-            textColor: Colors.white,
-            fontSize: 16.0);
+        print("Failed");
         return;
       }
     });
@@ -216,8 +188,8 @@ class _ProductListState extends State<ProductList> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
-          backgroundColor: Color.fromRGBO(191, 30, 46, 50),
-          textColor: Colors.white,
+          backgroundColor: Colors.greenAccent,
+          textColor: Colors.black,
           fontSize: 16.0);
       _loademaildialog();
     } else {
@@ -242,19 +214,19 @@ class _ProductListState extends State<ProductList> {
           Fluttertoast.showToast(
               msg: "Failed",
               toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
+              gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
+              backgroundColor: Colors.greenAccent,
+              textColor: Colors.black87,
               fontSize: 16.0);
         } else {
           Fluttertoast.showToast(
               msg: "Success",
               toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
+              gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
+              backgroundColor: Colors.greenAccent,
+              textColor: Colors.black87,
               fontSize: 16.0);
           _loadCart();
         }
@@ -279,19 +251,16 @@ class _ProductListState extends State<ProductList> {
   Future<void> _loadPref() async {
     prefs = await SharedPreferences.getInstance();
     email = prefs.getString("email") ?? '';
-    print(email);
     if (email == '') {
       _loademaildialog();
     } else {}
   }
 
   void _loadCart() {
-    print(email);
     http.post(Uri.parse("http://yck99.com/myshop/php/load_cart_item.php"),
         body: {"email": widget.user.email}).then((response) {
       setState(() {
         cartitem = int.parse(response.body);
-        //print(cartitem);
       });
     });
   }
@@ -353,4 +322,4 @@ class _ProductListState extends State<ProductList> {
                 ]),
         context: context);
   }
-} //end product class
+} //end home screen 

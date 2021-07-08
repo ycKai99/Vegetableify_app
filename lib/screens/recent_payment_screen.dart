@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:auto_size_text/auto_size_text.dart';
+import '/models/user.dart';
+import '/models/payment.dart';
 import 'package:flutter/material.dart';
-import 'package:midtermstiw2044myshop/models/payment.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:auto_size_text/auto_size_text.dart';
 
 class HistoryScreen extends StatefulWidget {
   final User user;
@@ -30,7 +30,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Recent Payment',
-            style: TextStyle(color: Colors.white, fontSize: 17)),
+            style: TextStyle(color: Colors.black, fontSize: 18)),
         actions: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -38,7 +38,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               onPressed: () => {_loadReceipt()},
               icon: Icon(
                 Icons.refresh,
-                color: Colors.white,
+                color: Colors.black87,
               ),
               label: Text(''),
             ),
@@ -81,7 +81,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           Flexible(child: OrientationBuilder(builder: (context, orientation) {
             return GridView.count(
                 crossAxisCount: 1,
-                childAspectRatio: 3 / 1,
+                childAspectRatio: 4 / 1,
                 children: List.generate(_receiptList.length, (index) {
                   return Column(
                     children: [
@@ -89,7 +89,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           height: 80,
                           child: Card(
                             elevation: 3,
-                            //color: Colors.lightGreenAccent[200],
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7)),
                             child: Row(
@@ -127,10 +126,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   );
                 }));
           })),
-
-          // Center(
-          //     child: Container(
-          //         child: CircularProgressIndicator(color: Colors.greenAccent))),
         ],
       ),
     );
@@ -154,7 +149,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   String _convert(receiptList) {
     var time = receiptList.split(".");
     String a = time[0];
-    //String b = time[1];
     return a;
   }
-}
+}//end recent payment screen

@@ -1,11 +1,11 @@
 import 'dart:convert';
+import '/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
 
 class ProductScreen extends StatefulWidget {
   final User user;
@@ -18,9 +18,6 @@ class _ProductScreenState extends State<ProductScreen> {
   double screenHeight, screenWidth;
   List _productList = [];
   String titleCenter = "Loading...";
-  TextEditingController _prnameController = new TextEditingController();
-  TextEditingController _prpriceController = new TextEditingController();
-  TextEditingController _prqtyController = new TextEditingController();
 
   @override
   void initState() {
@@ -42,7 +39,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 onPressed: () => {_loadProduct("all")},
                 icon: Icon(
                   Icons.refresh,
-                  color: Colors.white,
+                  color: Colors.black87,
                 ),
                 label: Text(''),
               ),
@@ -70,7 +67,6 @@ class _ProductScreenState extends State<ProductScreen> {
                         return Column(
                           children: [
                             Container(
-                              //color: Colors.red,
                               child: Card(
                                 elevation: 10,
                                 child: Padding(
@@ -185,7 +181,6 @@ class _ProductScreenState extends State<ProductScreen> {
         var jsondata = json.decode(response.body);
         _productList = jsondata["products"];
         print("Success");
-        //titleCenter = "Contain Data";
         setState(() {});
       } else {
         print("Failed");
@@ -193,38 +188,4 @@ class _ProductScreenState extends State<ProductScreen> {
       }
     });
   }
-
-  _editProduct(int index) {
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return AlertDialog(
-    //         shape: RoundedRectangleBorder(
-    //             borderRadius: BorderRadius.all(Radius.circular(20))),
-    //         title: Text("Add Product "),
-    //         content: new Container(
-    //           height: 40,
-    //           child: Text("Are you sure you want to add this product?"),
-    //         ),
-    //         actions: [
-    //           TextButton(
-    //               child: Text("Confirm",
-    //                   style: TextStyle(
-    //                       color: Colors.greenAccent,
-    //                       fontWeight: FontWeight.bold)),
-    //               onPressed: () {
-    //                 Navigator.of(context).pop();
-    //               }),
-    //           TextButton(
-    //               child: Text("Cancel",
-    //                   style: TextStyle(
-    //                       color: Colors.greenAccent,
-    //                       fontWeight: FontWeight.bold)),
-    //               onPressed: () {
-    //                 Navigator.of(context).pop();
-    //               }),
-    //         ],
-    //       );
-    //     });
-  }
-} //end class product_screen
+} //end product screen

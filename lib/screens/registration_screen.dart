@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
-import 'package:midtermstiw2044myshop/screens/login_screen.dart';
 import 'package:http/http.dart' as http;
-/* Step for register user
-1. enter email and password format
-
-2. click register
-- check email and password format
-- show confirm showDialog
-- call register user method
-- register success
-*/
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:midtermstiw2044myshop/screens/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -20,24 +11,27 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _showPassword = true;
+  double screenHeight, screenWidth;
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
   TextEditingController _passwordConfController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
       title: 'Material App',
       home: Scaffold(
         body: Center(
           child: SingleChildScrollView(
             child: Column(children: <Widget>[
+              //logo
               Container(
                   margin: EdgeInsets.fromLTRB(25, 20, 20, 10),
                   child: Image.asset('assets/images/logo.png')),
-
               SizedBox(height: 5),
-
+              //register card
               Card(
                 margin: EdgeInsets.fromLTRB(30, 10, 30, 20),
                 elevation: 8,
@@ -87,16 +81,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         obscureText: _showPassword,
                       ),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 80, 0),
-                          child: Text(' * Password format',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        onTap: _passwordFormat,
+                      Row(
+                        children: [
+                          GestureDetector(
+                            child: Text(' * Password format',
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)),
+                            onTap: _passwordFormat,
+                          ),
+                        ],
                       ),
                       SizedBox(height: 10),
                       Padding(
@@ -111,31 +106,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   TextStyle(color: Colors.black, fontSize: 15)),
                           onPressed: _register,
                         ),
-                      ), //register button
+                      ),
                     ],
                   ),
                 ),
-              ), //register card
+              ),
               GestureDetector(
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(60, 0, 0, 15),
-                    child: Text('Already Have Account ? ',
-                        style: TextStyle(fontSize: 15)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.green,
-                          decoration: TextDecoration.underline),
-                    ),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text('Already Have Account ? ',
+                      style: TextStyle(fontSize: 15)),
+                  Text(
+                    "Login",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.green,
+                        decoration: TextDecoration.underline),
                   ),
                 ]),
                 onTap: _alreadyReg,
               ),
+              SizedBox(height: 15),
             ]),
           ),
         ),
@@ -165,7 +156,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             title: Text("Register "),
             content: new Container(
               height: 40,
-              child: Text("Are you sure you want to register?"),
+              child: Text("Are you sure you want to register ?"),
             ),
             actions: [
               TextButton(
@@ -188,7 +179,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ],
           );
         });
-  } //end register
+  }
 
   void _registerUser(String email, String password) {
     http.post(Uri.parse("http://yck99.com/myshop/php/register_user.php"),
@@ -200,7 +191,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         showToast(3);
       }
     });
-  } //end register
+  }
 
   void _checkEmailPassword(String email, String password, String confPassword) {
     if (email.isEmpty == true ||
@@ -227,7 +218,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         }
       }
     }
-  } //end _checkEmailPassword
+  }
 
   void showToast(int num) {
     switch (num) {
@@ -282,7 +273,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             textColor: Colors.black,
             fontSize: 16);
     }
-  } //end showError
+  }
 
   void _onClick() {
     setState(() {
@@ -318,10 +309,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       Text(
                         '- Minimum 1 special case',
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        '- Common allow character',
                         textAlign: TextAlign.left,
                       ),
                     ],

@@ -1,11 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
+import '/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
 
 class NewProduct extends StatefulWidget {
   final User user;
@@ -26,18 +26,15 @@ class _NewProductState extends State<NewProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text('My Product', style: TextStyle(color: Colors.black)),
-        backgroundColor: Color(0x440000000),
-        elevation: 0,
       ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Card(
-                margin: EdgeInsets.fromLTRB(30, 90, 30, 20),
+                margin: EdgeInsets.fromLTRB(30, 25, 30, 20),
                 elevation: 8,
                 shadowColor: Colors.grey,
                 child: Padding(

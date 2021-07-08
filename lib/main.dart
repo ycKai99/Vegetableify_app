@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:midtermstiw2044myshop/screens/splash_screen.dart';
-
 import 'models/theme.dart';
+import 'screens/splash_screen.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(home: MyApp()));
 

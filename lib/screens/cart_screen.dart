@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:cached_network_image/cached_network_image.dart';
+import '/models/user.dart';
+import 'checkout_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/checkout_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CartScreen extends StatefulWidget {
   final String email;
@@ -19,6 +20,7 @@ class _CartScreenState extends State<CartScreen> {
   List _cartList = [];
   String _titlecenter = "No product in my cart...";
   double _totalprice = 0.0;
+  double screenHeight, screenWidth;
   @override
   void initState() {
     super.initState();
@@ -27,6 +29,9 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('My Cart', style: TextStyle(color: Colors.black)),
@@ -71,55 +76,110 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                               Container(
-                                  height: 100,
+                                  height: screenHeight / 2,
                                   child: VerticalDivider(color: Colors.grey)),
                               Expanded(
                                 flex: 6,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(_cartList[index]['prname'],
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
-                                      Row(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          IconButton(
-                                            icon: Icon(Icons.remove),
-                                            onPressed: () {
-                                              _modQty(index, "removecart");
-                                            },
-                                          ),
-                                          Text(_cartList[index]['cartqty']),
-                                          IconButton(
-                                            icon: Icon(Icons.add),
-                                            onPressed: () {
-                                              _modQty(index, "addcart");
-                                            },
-                                          ),
+                                          Text(_cartList[index]['prname'],
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
+                                          SizedBox(height: screenHeight / 20),
+                                          AutoSizeText(
+                                              "RM " +
+                                                  (int.parse(_cartList[index]
+                                                              ['cartqty']) *
+                                                          double.parse(
+                                                              _cartList[index]
+                                                                  ['prprice']))
+                                                      .toStringAsFixed(2),
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18),
+                                              minFontSize: 1,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis)
                                         ],
                                       ),
-                                      Text(
-                                        "RM " +
-                                            (int.parse(_cartList[index]
-                                                        ['cartqty']) *
-                                                    double.parse(
-                                                        _cartList[index]
-                                                            ['prprice']))
-                                                .toStringAsFixed(2),
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    Expanded(
+                                        flex: 6,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.green[200],
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.5),
+                                                          spreadRadius: 3,
+                                                          blurRadius: 4,
+                                                          offset: Offset(0, 3),
+                                                        )
+                                                      ]),
+                                                  child: IconButton(
+                                                    icon: Icon(Icons.remove,
+                                                        size: 15),
+                                                    onPressed: () {
+                                                      _modQty(
+                                                          index, "removecart");
+                                                    },
+                                                  ),
+                                                ),
+                                                AutoSizeText(
+                                                    _cartList[index]['cartqty'],
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.black87),
+                                                    minFontSize: 1,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                                Container(
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.green[200],
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.5),
+                                                          spreadRadius: 3,
+                                                          blurRadius: 4,
+                                                          offset: Offset(0, 3),
+                                                        )
+                                                      ]),
+                                                  child: IconButton(
+                                                    icon: Icon(Icons.add,
+                                                        size: 15),
+                                                    onPressed: () {
+                                                      _modQty(index, "addcart");
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )),
+                                  ],
                                 ),
                               ),
                               Expanded(
@@ -127,7 +187,7 @@ class _CartScreenState extends State<CartScreen> {
                                 child: Column(
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: Icon(Icons.cancel_outlined),
                                       onPressed: () {
                                         _deleteCartDialog(index);
                                       },
@@ -319,7 +379,8 @@ class _CartScreenState extends State<CartScreen> {
                         await Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => Checkout(
-                                email: widget.email, totalPrice: _totalprice),
+                                email: widget.user.email,
+                                totalPrice: _totalprice),
                           ),
                         );
                       },
@@ -333,4 +394,4 @@ class _CartScreenState extends State<CartScreen> {
           context: context);
     }
   }
-}
+}//end cart screen

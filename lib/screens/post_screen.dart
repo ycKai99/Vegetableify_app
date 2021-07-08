@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:midtermstiw2044myshop/screens/addproduct_screen.dart';
-
+import '/models/user.dart';
 import 'product_screen.dart';
+import 'addproduct_screen.dart';
+import 'package:flutter/material.dart';
 
 class PostScreen extends StatefulWidget {
   final User user;
@@ -96,4 +95,4 @@ class _PostScreenState extends State<PostScreen> {
       )),
     );
   }
-}
+}//end post screen

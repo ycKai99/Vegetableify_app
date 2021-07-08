@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:midtermstiw2044myshop/models/payment.dart';
-import 'package:midtermstiw2044myshop/models/user.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'main_screen.dart';
+import '/models/user.dart';
+import '/models/payment.dart';
+import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentScreen extends StatefulWidget {
   final User user;
@@ -22,7 +22,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment'),
+        title: Text('Payment', style: TextStyle(color: Colors.black87)),
+        backgroundColor: Colors.green[200],
       ),
       body: Center(
         child: Container(
@@ -53,10 +54,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       widget.payment.phone,
                       widget.payment.name,
                       widget.payment.amount);
-                  print(widget.payment.email);
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => MainScreen(payment: _pay),
+                      builder: (context) =>
+                          MainScreen(payment: _pay, user: widget.user),
                     ),
                   );
                 },
@@ -72,4 +73,4 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
     );
   }
-}
+}//end payment screen

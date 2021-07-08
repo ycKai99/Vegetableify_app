@@ -7,7 +7,6 @@ class CustomTheme {
         primaryColor: Colors.black,
         accentColor: Colors.green[100],
         focusColor: Colors.greenAccent,
-        fontFamily: 'Georgia',
         textSelectionTheme: TextSelectionThemeData(
             selectionHandleColor: Colors.greenAccent,
             cursorColor: Colors.greenAccent),
